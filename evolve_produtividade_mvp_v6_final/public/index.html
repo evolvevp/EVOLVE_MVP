@@ -4,7 +4,7 @@
 <body>
 <div id="login" class="screen">
   <div class="login-card">
-    <div class="brand">EVOLVE</div><h1>Controle de produtividade</h1><p>Selecione seu nome para iniciar o expediente.</p>
+    <div class="brand brand-login">EVOLVE <small>MVP</small></div><h1>Controle de produtividade</h1><p>Selecione seu nome para iniciar o expediente.</p>
     <div id="consultantList" class="consultant-list"></div>
     <p class="muted legend"><span class="session-badge">● Sessão ativa</span> expediente em andamento agora.</p>
     <div class="developer-credit">Desenvolvido por Kalled, o maioral!</div>
@@ -12,28 +12,48 @@
 </div>
 
 <div id="app" class="hidden">
-<header>
-  <div><div class="brand">EVOLVE</div><span id="todayLabel"></span></div>
-  <div class="header-right">
-    <div id="loggedProfile" class="logged-profile"></div>
-    <button class="secondary" onclick="goHome()">🏠 Página Inicial</button>
-    <button class="secondary" onclick="openSettings()">⚙ Configurações</button>
-    <button id="adminSettingsButton" class="secondary hidden" onclick="openAdmin()">🛠 Painel administrativo</button>
-    <button class="secondary" onclick="openHistory()">Histórico</button>
-    <button class="danger finish-btn" onclick="finishShift()">Finalizar expediente</button>
+  <aside class="sidebar">
+    <div class="sidebar-brand"><span class="brand-mark">EVOLVE</span><small>MVP</small></div>
+    <nav class="sidebar-nav">
+      <button class="nav-item active" onclick="document.getElementById('activitySection').scrollIntoView({behavior:'smooth'})"><span>✎</span> Registrar atividade</button>
+      <button class="nav-item" onclick="document.getElementById('teamSection').scrollIntoView({behavior:'smooth'})"><span>▥</span> Desempenho por consultor</button>
+      <button class="nav-item" onclick="openHistory()"><span>◷</span> Histórico de expedientes</button>
+      <button class="nav-item" onclick="openSettings()"><span>⚙</span> Configurações</button>
+      <button id="adminSettingsButton" class="nav-item hidden" onclick="openAdmin()"><span>⚙</span> Painel administrativo</button>
+    </nav>
+    <button class="logout-nav" onclick="goHome()"><span>⇥</span> Sair do sistema</button>
+    <div class="developer-credit sidebar-credit">Desenvolvido por Kalled, o maioral!</div>
+  </aside>
+
+  <div class="app-shell">
+    <main>
+      <section class="profile-card">
+        <div class="profile-status"><span></span> Consultor ativo</div>
+        <div class="active-person">
+          <div id="activePhoto" class="avatar profile-avatar">?</div>
+          <div><h1 id="activeName">—</h1><p id="activeHours">Expediente iniciado às —</p></div>
+        </div>
+        <div class="profile-settings"><button class="icon settings-icon" onclick="openSettings()">⚙</button></div>
+      </section>
+
+      <section id="activitySection" class="card activity-card">
+        <div class="section-title"><h2>Registrar atividade</h2><span class="muted">clique nos botões para registrar</span></div>
+        <div id="activityButtons" class="activity-grid"></div>
+      </section>
+
+      <section id="teamSection" class="card team-card">
+        <div class="section-title"><h2>Desempenho por consultor</h2><span class="muted">comparativo de todas as métricas</span></div>
+        <div class="table-wrap"><table><thead><tr id="teamHead"></tr></thead><tbody id="teamBody"></tbody></table></div>
+      </section>
+
+      <div class="finish-floating"><button class="finish-btn" onclick="finishShift()"><span>✓</span><div><strong>Finalizar Expediente</strong><small>Finalize para registrar suas atividades do dia.</small></div></button></div>
+    </main>
   </div>
-</header>
-<main>
-<section class="hero"><div><h2>Dashboard operacional</h2><p>Registre manualmente todas as atividades realizadas durante o expediente.</p></div><div class="live"><span></span> Métricas atualizadas</div></section>
-<section class="card"><div class="section-title"><h3>Registrar atividade</h3><span class="muted">use + para registrar e − para corrigir</span></div><div id="activityButtons" class="activity-grid"></div></section>
-<section class="card team-card"><div class="section-title"><h3>Desempenho por consultor</h3><span class="muted">comparativo de todas as métricas</span></div><div class="table-wrap"><table><thead><tr id="teamHead"></tr></thead><tbody id="teamBody"></tbody></table></div></section>
-</main></div>
+</div>
 
 <div id="modal" class="modal hidden"><div class="modal-box"><div class="section-title"><h3>Histórico de expedientes</h3><button class="icon" onclick="closeModal()">×</button></div><div id="history"></div></div></div>
-
 <div id="settingsModal" class="modal hidden"><div class="modal-box settings-box">
-<div class="section-title"><h3>Configurações do consultor</h3><button class="icon" onclick="closeSettings()">×</button></div>
-<p class="muted">Edite os dados do perfil atualmente conectado.</p>
+<div class="section-title"><h3>Configurações do consultor</h3><button class="icon" onclick="closeSettings()">×</button></div><p class="muted">Edite os dados do perfil atualmente conectado.</p>
 <div class="profile-edit"><div id="cfgPhotoPreview" class="avatar profile-avatar">?</div><div><strong>Foto do consultor</strong><p class="muted">A foto aparecerá no perfil e na tela de seleção.</p><input id="cfgPhoto" type="file" accept="image/*" onchange="previewPhoto(event)"></div></div>
 <div class="form-grid"><label>Nome<input id="cfgName" type="text"></label><label>Horário de início<input id="cfgStart" type="time"></label><label>Meta diária<input id="cfgGoal" type="number" min="0"></label></div>
 <h4 class="personal-title">Personalização</h4><div class="form-grid"><label>Cor dos botões<input id="cfgButtonColor" type="color"></label><label>Cor do papel de parede<input id="cfgBackgroundColor" type="color"></label></div>
@@ -47,7 +67,6 @@
 </div></div>
 
 <div id="finishReportModal" class="modal hidden"><div class="modal-box report-box"><div class="section-title"><div><h3>Expediente finalizado</h3><span class="muted">Todas as métricas foram registradas.</span></div><button class="icon" onclick="closeFinishReport()">×</button></div><pre id="finishReportContent" class="report-content"></pre><div class="settings-actions"><button id="copyFinishReport" class="primary">Copiar relatório</button><button class="secondary" onclick="closeFinishReport()">Fechar</button></div></div></div>
-
 <div id="matriculaModal" class="modal hidden"><div class="modal-box checklist-box"><div class="section-title"><h3>Checklist de Matrícula</h3><button class="icon" onclick="cancelMatriculaChecklist()">×</button></div><div id="matriculaStepContent"></div></div></div>
 <div id="matriculaLegalModal" class="modal hidden"><div class="modal-box legal-box"><h3>MATRÍCULA</h3><p>No ato da matrícula, foram prestadas todas as orientações ao contratante sobre os seguintes pontos:</p><ul><li>Fidelidade contratual de 12 meses, incluindo a aplicação da multa rescisória correspondente a 20% do valor remanescente do contrato, em caso de cancelamento antecipado.</li><li>Aviso prévio para cancelamento, explicado de forma clara, com exemplos práticos, garantindo o completo entendimento e o esclarecimento de todas as dúvidas.</li><li>Procedimento de cancelamento, informando que deverá ser realizado presencialmente pelo titular do contrato.</li><li>Ativação por prazo indeterminado e renovação contratual, com as devidas explicações sobre seu funcionamento.</li><li>Suspensão do contrato, incluindo as condições e o procedimento para solicitação.</li></ul><div class="settings-actions"><button class="secondary" onclick="copyMatriculaLegal()">Copiar</button><button class="primary" onclick="closeMatriculaLegal()">Fechar</button></div></div></div>
 <div id="cancelamentoModal" class="modal hidden"><div class="modal-box checklist-box"><div class="section-title"><h3>Checklist de Cancelamento</h3><button class="icon" onclick="closeCancelamentoChecklist()">×</button></div><div id="cancelamentoStepContent"></div></div></div>
