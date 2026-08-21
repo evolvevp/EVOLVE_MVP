@@ -1,6 +1,6 @@
 <!doctype html>
 <html lang="pt-BR">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EVOLVE • Produtividade</title><link rel="stylesheet" href="/style.css"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>EVOLVE • Produtividade</title><link rel="stylesheet" href="/style.css"><link rel="stylesheet" href="/activity-ui.css"></head>
 <body>
 <div id="login" class="screen">
   <div class="login-card">
@@ -71,5 +71,5 @@
 <div id="matriculaLegalModal" class="modal hidden"><div class="modal-box legal-box"><h3>MATRÍCULA</h3><p>No ato da matrícula, foram prestadas todas as orientações ao contratante sobre os seguintes pontos:</p><ul><li>Fidelidade contratual de 12 meses, incluindo a aplicação da multa rescisória correspondente a 20% do valor remanescente do contrato, em caso de cancelamento antecipado.</li><li>Aviso prévio para cancelamento, explicado de forma clara, com exemplos práticos, garantindo o completo entendimento e o esclarecimento de todas as dúvidas.</li><li>Procedimento de cancelamento, informando que deverá ser realizado presencialmente pelo titular do contrato.</li><li>Ativação por prazo indeterminado e renovação contratual, com as devidas explicações sobre seu funcionamento.</li><li>Suspensão do contrato, incluindo as condições e o procedimento para solicitação.</li></ul><div class="settings-actions"><button class="secondary" onclick="copyMatriculaLegal()">Copiar</button><button class="primary" onclick="closeMatriculaLegal()">Fechar</button></div></div></div>
 <div id="cancelamentoModal" class="modal hidden"><div class="modal-box checklist-box"><div class="section-title"><h3>Checklist de Cancelamento</h3><button class="icon" onclick="closeCancelamentoChecklist()">×</button></div><div id="cancelamentoStepContent"></div></div></div>
 <div id="cancellationPendingModal" class="modal hidden"><div class="modal-box pending-box"><div class="section-title"><h3>⚠ Pendências de cancelamento</h3><button class="icon" onclick="closeCancellationPending()">×</button></div><p class="muted">Marque cada pendência conforme ela for resolvida. Quando todas forem concluídas, o cancelamento será contabilizado automaticamente.</p><div id="cancellationPendingList"></div></div></div>
-<script src="/app.js"></script>
+<script src="/app.js"></script><script src="/activity-ui.js"></script>
 </body></html>
