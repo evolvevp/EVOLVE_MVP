@@ -48,6 +48,15 @@
     </div>`;
   }
 
+  function finishCard(){
+    return `<div class="finish-grid-card">
+      <button class="finish-grid-btn" onclick="finishShift()">
+        <span class="finish-grid-icon">✓</span>
+        <span><strong>Finalizar expediente</strong><small>Registrar e fechar o expediente</small></span>
+      </button>
+    </div>`;
+  }
+
   window.renderActivities=function(){
     const me=state.stats?.rows?.find(x=>x.id===state.consultant.id);
     const pending=hasCancellationPending();
@@ -58,7 +67,8 @@
       renderChargeCard(me),
       regularCard("agendamentos","Agendamentos de treino",me,pending),
       regularCard("visitas","Visitas recebidas",me,pending),
-      regularCard("nps","NPS",me,pending)
+      regularCard("nps","NPS",me,pending),
+      finishCard()
     ].join("");
     document.getElementById("activityButtons").innerHTML=html;
   };
